@@ -31,4 +31,4 @@ spec:
           emptyDir: {} # set your own volume
         - name: rtsp2hls-conf
           configMap:
-            name: rtsp2hls-conf
+            name: rtsp2hls-conf # set configmap. filename:"config.csv"

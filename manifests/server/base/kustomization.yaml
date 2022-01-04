@@ -5,8 +5,3 @@ resources:
   - rtsp2hls.yaml
   - hls2mpeg.yaml
   - monitor.yaml
-
-configMapGenerator:
-  - name: rtsp2hls-conf
-    files:
-      - config.csv=config
