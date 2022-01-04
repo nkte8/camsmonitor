@@ -1,11 +1,8 @@
-# streaming-monitor  
-## 設定方法  
-```sh
-git clone <リポジトリURL>
-# <マニフェスト内のイメージの参照先・NFS設定等を修正>
-# <config.csvを配置>
-kubectl apply -k ./monitoring/manifests/streaming-monitor
-```
+# 設定方法  
+
+`overlay`ディレクトリにマニフェストを作成するか、`base`ディレクトリの内容を編集して`apply`してください。  
+docker-hubにイメージは配置していないため、イメージはご自身でビルドしてください。
+
 ## config.csvについて  
 次のように設定
 ```csv

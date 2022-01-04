@@ -9,4 +9,4 @@ resources:
 configMapGenerator:
   - name: rtsp2hls-conf
     files:
-      - config.csv=config.csv
+      - config.csv=config

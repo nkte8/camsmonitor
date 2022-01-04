@@ -1,4 +1,4 @@
-apiVersion: batch/v1
+apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: hls2mpeg
@@ -8,7 +8,7 @@ spec:
   jobTemplate:
     spec:
       parallelism: 1
-      completions: 3 # set over count of cameras
+      completions: 1 # set over count of cameras
       template:
         metadata:
           name: hls2mpeg
@@ -16,12 +16,8 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: hls2mpeg
-              image: registry.neko.lab:5005/root/monitoring/hls2mpeg
+              image: hls2mpeg
               imagePullPolicy: Always
-              resources:
-                requests:
-                  cpu: 300m
-                  memory: 800Mi
               volumeMounts:
                 - name: video-out
                   mountPath: /out
@@ -31,7 +27,4 @@ spec:
                     command: ["/app/sigterm.sh"]
           volumes:
             - name: video-out
-              glusterfs:
-                endpoints: glusterfs-cluster
-                path: /gvol/Data/camera
-                readOnly: false
+              emptyDir: {} # set your own volume
