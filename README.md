@@ -1,22 +1,31 @@
-# camsmonitorについて４  
+# camsmonitorについて  
 
 RaspberryPiのカメラモジュールを用いた、監視カメラ・映像配信サービスです。  
 プロダクトの煩雑化を防ぐため、旧プロジェクト`monitoring`からフォークされました。
 
-### サービスのセットアップ   
-RaspberryPi上にk8s環境およびgitlabサーバがあること、カメラモジュールのセットアップを完了している前提としています。  
+## 設定方法  
 
-1) gitlab環境に本プロジェクトをcloneし、`gitlab-ci.yaml`によってコンテナをビルドする。  
+`manifests/overlay`ディレクトリにマニフェストを作成するか、`manifests/base`ディレクトリの内容を編集して、クラスタに対して`apply`してください。  
+docker-hubにイメージは配置していないため、イメージはご自身でビルドしてください。
 
-2) エッジデバイスに`monitoring/manifests/client/docker-compose.yaml`を配布し、起動する。
-
-3) すべてのyamlファイル内の`**.template.spec.containers.image`を、各々のコンテナレジストリに設定し直す。
-
-4) すべてのyamlファイル内の`volumes.name:video-out`および`volumes.name:video`の設定を各自クラスタの設定に合わせる。
-
-5) config.csvおよびrtsp2hlsマニフェストのDeploymentのレプリカ数をエッジデバイスと一致させる。
-
-6) サービスを起動する
-```sh
-kubectl apply -k ./monitoring/manifests/streaming-monitor
+## config.csvについて  
+次のように設定します。
+```csv
+<デバイス名(DNS名)>,<各セグメントの動画時間>,<映像の回転設定>,<IPアドレス>
 ```
+映像の回転設定は以下のいずれかを指定すること  
+- Rotate_0  
+    - 時計回り 0度（そのままの映像）
+- Rotate_90  
+    - 時計回り 90度  
+- Rotate_180  
+    - 時計回り 180度  
+- Rotate_270  
+    - 時計回り 270度  
+
+## 設定例  
+`<IPアドレス>`については省略可能です。  
+```csv
+edge01,5,Rotate_0,192.168.3.31
+192.168.3.32,10,Rotate_180
+```  
