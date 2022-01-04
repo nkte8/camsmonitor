@@ -1,6 +1,7 @@
 version: '3'
 services:
   edge-client:
+    # set your build image
     image: registry.neko.lab:5005/root/monitoring/v4l2rtspserver
     container_name: edge-client
     command: -W 640 -H 480 -F 10
