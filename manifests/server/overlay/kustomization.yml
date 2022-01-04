@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../base
+
+images:
+  - name: hls2mpeg
+    newName: registry.neko.lab:5005/root/camsmonitor/hls2mpeg
+    newTag: latest
+  - name: nginx-client
+    newName: registry.neko.lab:5005/root/camsmonitor/nginx-client
+    newTag: latest
+  - name: rtsp2hls
+    newName: registry.neko.lab:5005/root/camsmonitor/rtsp2hls
+    newTag: latest
+
+configMapGenerator:
+  - name: rtsp2hls-conf
+    files:
+      - config.csv=config.conf
