@@ -1,3 +1,5 @@
 .DS_Store
 **/.DS_Store
+**/overlay/*.yaml
+**/*.conf
 manifests/streaming-monitor/config.csv
